@@ -1,50 +1,80 @@
-# React + TypeScript + Vite
+# 康威生命游戏
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+这是一个使用 React 和 TypeScript 实现的康威生命游戏（Conway's Game of Life）。项目采用现代化的前端技术栈，提供了一个交互式的、可视化的生命游戏模拟器。
 
-Currently, two official plugins are available:
+## 功能特点
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **交互式网格**：通过鼠标点击或拖动来创建/消除细胞
+- **环形边界**：网格边界是连续的，当细胞到达边界时会从对边出现
+- **实时状态显示**：显示当前迭代次数
+- **稳定状态检测**：自动检测并提示当游戏达到稳定状态
+- **多种控制选项**：
+  - 开始/暂停：控制游戏的运行状态
+  - 重置：清空网格
+  - 随机：随机生成初始状态
+  - 高斯帕机枪：自动生成一个会持续产生滑翔机的图案
 
-## Expanding the ESLint configuration
+## 技术实现
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **前端框架**：React 18
+- **开发语言**：TypeScript
+- **构建工具**：Vite
+- **UI组件**：Ant Design
+- **状态管理**：React Hooks (useState, useEffect, useCallback)
 
-- Configure the top-level `parserOptions` property like this:
+### 核心算法
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+游戏的核心逻辑基于以下规则：
+1. 活细胞周围有2-3个活细胞时继续存活
+2. 死细胞周围正好有3个活细胞时转为活细胞
+3. 其他情况下细胞死亡或保持死亡状态
+
+## 本地运行
+
+### 环境要求
+
+- Node.js (推荐 v16 或更高版本)
+- npm 或 yarn
+
+### 安装步骤
+
+1. 克隆项目到本地：
+   ```bash
+   git clone https://github.com/l33klin/live_game.git
+   cd live_game
+   ```
+
+2. 安装依赖：
+   ```bash
+   npm install
+   ```
+
+3. 启动开发服务器：
+   ```bash
+   npm run dev
+   ```
+
+4. 在浏览器中访问：
+   ```
+   http://localhost:5173
+   ```
+
+### 构建部署
+
+如果需要构建生产版本：
+
+```bash
+ npm run build
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+构建后的文件将生成在 `dist` 目录中。
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## 使用说明
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. 点击网格中的任意位置可以切换细胞的生存状态
+2. 按住鼠标并拖动可以快速绘制多个细胞
+3. 点击「开始」按钮启动游戏演化
+4. 使用「暂停」按钮可以随时暂停游戏
+5. 「重置」按钮可以清空网格重新开始
+6. 「随机」按钮可以生成随机的初始状态
+7. 「高斯帕机枪」按钮可以生成一个经典的会持续产生滑翔机的图案
